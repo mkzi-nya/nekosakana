@@ -1,0 +1,25 @@
+diff --git a/libtailscale/backend.go b/libtailscale/backend.go
+index bfd0a11..c3848bb 100644
+--- a/libtailscale/backend.go
++++ b/libtailscale/backend.go
+@@ -56,6 +56,7 @@ type App struct {
+ 
+ 	localAPIHandler http.Handler
+ 	backend         *ipnlocal.LocalBackend
++	netstack        *netstack.Impl
+ 	ready           sync.WaitGroup
+ 	backendMu       sync.Mutex
+ 
+@@ -353,8 +354,11 @@ func (a *App) newBackend(dataDir string, appCtx AppContext, store *stateStore,
+ 	if err != nil {
+ 		return nil, fmt.Errorf("netstack.Create: %w", err)
+ 	}
++	a.backendMu.Lock()
++	a.netstack = ns
++	a.backendMu.Unlock()
+ 	sys.Set(ns)
+-	ns.ProcessLocalIPs = false // let Android kernel handle it; VpnBuilder sets this up
++	ns.ProcessLocalIPs = true // app-scoped listeners receive traffic without an Android VPN
+ 	ns.ProcessSubnets = true   // for Android-being-an-exit-node support
+ 	sys.NetstackRouter.Set(true)
+ 	if w, ok := sys.Tun.GetOK(); ok {

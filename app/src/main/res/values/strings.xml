@@ -1,0 +1,3 @@
+<resources>
+    <string name="access_desc">远程协助需要辅助功能来代你执行点击、滑动与文字输入。仅在对方发起远程控制时才会调用，未授权时不会使用。</string>
+</resources>

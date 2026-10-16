@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  仅订阅窗口状态变化：足以跟踪前台应用，避免 typeAllMask 带来的海量事件
+  拖垮系统无障碍框架（这会间接加重 system_server 负担）。
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault"
+    android:canPerformGestures="true"
+    android:canRetrieveWindowContent="true"
+    android:canTakeScreenshot="true"
+    android:description="@string/access_desc"
+    android:notificationTimeout="150"
+    android:settingsActivity="app.nekosakana.ui.MainActivity" />

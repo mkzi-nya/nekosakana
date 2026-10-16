@@ -1,0 +1,54 @@
+plugins {
+    id 'com.android.application'
+}
+
+dependencies {
+    implementation files('libs/libtailscale.aar')
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+    implementation 'dev.rikka.shizuku:api:13.1.5'
+    implementation 'dev.rikka.shizuku:provider:13.1.5'
+    implementation 'org.apache.commons:commons-compress:1.21'
+    implementation 'org.tukaani:xz:1.9'
+}
+
+android {
+    namespace 'app.nekosakana'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'app.nekosakana'
+        minSdk 29
+        targetSdk 35
+        // 版本号规则：新增功能次版本 +.1，仅修复修订号 +.1；versionCode 固定为 1。
+        // versionCode 声明在 app/src/main/AndroidManifest.xml。见 docs/04-版本与发布.md
+        versionName '1.1.0'
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'arm64-v8a'
+            universalApk false
+        }
+    }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildTypes {
+        debug {
+        }
+        release {
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+    lint {
+        abortOnError false
+    }
+}
